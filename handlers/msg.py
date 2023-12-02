@@ -4,7 +4,6 @@ from create_bot import bot
 from .call import *
 from data.config import load_config
 from .db import db_update_phrases, db_get_users, db_users
-from .func import run_command
 from .keyb import menu
 
 config = load_config("data/.env")
@@ -46,11 +45,6 @@ async def delPhraseState(msg: types.Message, state: FSMContext):
     db_update_phrases(payload)
     await msg.answer(text='Фраза удалена!', reply_markup=menu())
     await state.finish()
-
-
-@dp.message_handler(commands=['run'])
-async def run(msg: types.Message):
-    await msg.answer(run_command(msg.text[4:]), parse_mode='html')
 
 
 @dp.message_handler(content_types=['text'])
